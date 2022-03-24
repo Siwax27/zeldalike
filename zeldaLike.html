@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><title>Mon 1er jeu Phaser</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.51.0/dist/phaser.js">
+    </script>
+
+    <style type="text/css"> body 
+    
+        { margin: 0; 
+        }
+ 
+        #endGame{
+            display: none;
+            font-size: 100px;
+            color: red;
+            padding-top: 230px;
+            padding-left:110px ;
+            position:absolute;
+            z-index:1
+        }
+
+        
+    
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+
+        var config = {
+            type: Phaser.AUTO,
+            width: 1280, height: 320,
+            physics: {
+            default: 'arcade',
+            arcade: {
+            debug: true
+            }},
+            scene: {preload: preload, create: create, update: update },
+            input : {gamepad:true},
+            };
+
+        new Phaser.Game(config);  
+          
+
+        function preload(){
+
+            this.load.image("Phaser_tuilesdejeu", "assets/toutesleszones.png");
+
+            this.load.tilemapTiledJSON("carte", "assets/niveau.json");  
+
+            this.load.spritesheet('perso','assets/testhero.png',
+            { frameWidth: 32, frameHeight: 32 });
+        }
+
+
+
+        var player;
+        var cursors;
+
+
+        function create (){
+            cursors = this.input.keyboard.createCursorKeys();
+            const carteDuNiveau = this.add.tilemap("carte");
+
+            // importer les TileSet 
+            const tileset = carteDuNiveau.addTilesetImage(
+                    "zones",
+                    "Phaser_tuilesdejeu"
+                    );  
+
+            const plateformes = carteDuNiveau.createStaticLayer(
+                    "zonePlaine",
+                    tileset
+                    ); 
+        
+            player = this.physics.add.sprite(32,32,'perso')    
+
+            this.physics.add.collider(player, plateformes);
+
+            plateformes.setCollisionByProperty({ estSolide: true });   
+
+           
+            this.physics.world.setBounds(0, 0, 150, 70);
+            this.cameras.main.setBounds(0, 0, 32, 32);
+            this.cameras.main.startFollow(player);
+            
+            player = this.physics.add.sprite(32, 32, 'perso');
+                    player.setBounce(0.2);
+                    player.setCollideWorldBounds(true);
+                    this.physics.add.collider(player, plateformes);
+                    this.anims.create({
+                    key: 'left',
+                    frames: this.anims.generateFrameNumbers('perso', {start:4,end:7}),
+                    frameRate: 10,
+                    repeat: -1
+                    });
+                    this.anims.create({
+                    key: 'right',
+                    frames: this.anims.generateFrameNumbers('perso', {start:8,end:11}),
+                    frameRate: 10,
+                    repeat: -1
+                    });
+                    this.anims.create({
+                    key: 'up',
+                    frames: this.anims.generateFrameNumbers('perso', {start:12,end:15}),
+                    frameRate: 10,
+                    repeat: -1
+                    });
+                    this.anims.create({
+                    key: 'down',
+                    frames: this.anims.generateFrameNumbers('perso', {start:0,end:3}),
+                    frameRate: 10,
+                    repeat: -1
+                    });
+                    this.anims.create({
+                    key: 'turn',
+                    frames: [ { key: 'perso', frame: 0 } ],
+                    frameRate: 20
+                    });
+        }
+        
+        function update(){   
+            if (cursors.left.isDown){ //si la touche gauche est appuyée
+                    player.setVelocityX(-160); //alors vitesse négative en X
+                    player.anims.play('left', true); //et animation => gauche
+            }else{
+                player.setVelocityX(0);
+            }
+            if (cursors.right.isDown){ //si la touche droite est appuyée
+                    player.setVelocityX(160); //alors vitesse positive en X
+                    player.anims.play('right', true); //et animation => droite
+            }
+            if (cursors.up.isDown){// si la touche haut est appuyée 
+                    player.setVelocityY(-160);//alors vitesse positive en Y 
+                    player.anims.play('up', true);// et animation => haut
+            }
+            if (cursors.down.isDown){//si la touche bas est appuyée 
+                    player.setVelocityY(160);//alors vitesse positive en Y
+                    player.anims.play('down', true); 
+            }
+
+    }
+
+        
+    </script>
+</body>
+</html>
