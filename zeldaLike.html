@@ -29,7 +29,7 @@
 
         var config = {
             type: Phaser.AUTO,
-            width: 1280, height: 320,
+            width: 960, height: 320,
             physics: {
             default: 'arcade',
             arcade: {
@@ -80,8 +80,8 @@
             plateformes.setCollisionByProperty({ estSolide: true });   
 
            
-            this.physics.world.setBounds(0, 0, 1280, 320);
-            this.cameras.main.setBounds(0, 0, 32, 32);
+            this.physics.world.setBounds(0, 0, 960, 320);
+            this.cameras.main.setBounds(0, 0, 96, 96);
             this.cameras.main.startFollow(player);
             
             player = this.physics.add.sprite(32, 32, 'perso');
