@@ -71,17 +71,17 @@
             const plateformes = carteDuNiveau.createStaticLayer(
                     "zonePlaine",
                     tileset
-                    ); 
+                    );
         
             player = this.physics.add.sprite(32,32,'perso')    
 
             this.physics.add.collider(player, plateformes);
 
             plateformes.setCollisionByProperty({ estSolide: true });   
+            player.body.setSize(20, 20, 10, 0);
 
-           
             this.physics.world.setBounds(0, 0, 960, 320);
-            this.cameras.main.setBounds(0, 0, 96, 96);
+            this.cameras.main.setBounds(0, 0, 64, 64);
             this.cameras.main.startFollow(player);
             
             player = this.physics.add.sprite(32, 32, 'perso');
@@ -140,6 +140,8 @@
                     player.setVelocityY(160);//alors vitesse positive en Y
                     player.anims.play('down', true); 
             }
+
+        
 
     }
 
