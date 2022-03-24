@@ -80,7 +80,7 @@
             plateformes.setCollisionByProperty({ estSolide: true });   
 
            
-            this.physics.world.setBounds(0, 0, 150, 70);
+            this.physics.world.setBounds(0, 0, 1280, 320);
             this.cameras.main.setBounds(0, 0, 32, 32);
             this.cameras.main.startFollow(player);
             
@@ -133,6 +133,8 @@
             if (cursors.up.isDown){// si la touche haut est appuyée 
                     player.setVelocityY(-160);//alors vitesse positive en Y 
                     player.anims.play('up', true);// et animation => haut
+            }else{
+                player.setVelocityY(0);
             }
             if (cursors.down.isDown){//si la touche bas est appuyée 
                     player.setVelocityY(160);//alors vitesse positive en Y
