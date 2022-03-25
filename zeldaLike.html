@@ -58,8 +58,8 @@
         var cursors;
         var monstre;
 
-
         function create (){
+
             cursors = this.input.keyboard.createCursorKeys();
             const carteDuNiveau = this.add.tilemap("carte");
 
@@ -86,16 +86,16 @@
             monstre.body.setSize(20, 10);
                 monstre.setOffset(5,20);
 
-            this.physics.world.setBounds(0, 0, 320, 320);
-            this.cameras.main.setBounds(0, 0, 320,320);
+            this.physics.world.setBounds(0, 0, 960, 640);
+            this.cameras.main.setBounds(0, 0, 960,640);
             this.cameras.main.setSize(320,320);
             this.cameras.main.startFollow(player);
 
             
         
             player.setBounce(0.2);
+            monstre.setCollideWorldBounds(true);
             player.setCollideWorldBounds(true);
-            this.physics.add.collider(player, plateformes);
             this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('perso', {start:4,end:7}),
