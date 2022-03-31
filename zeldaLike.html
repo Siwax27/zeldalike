@@ -47,7 +47,7 @@
             this.load.image("Phaser_tuilesdejeu", "assets/toutesleszones.png");
 
             this.load.tilemapTiledJSON("carte", "assets/niveau.json");  
-
+            this.load.tilemapTiledJSON("carteP","assets/niveauP.json");
             this.load.spritesheet('perso','assets/testhero.png',
             { frameWidth: 32, frameHeight: 32 });
 
@@ -67,6 +67,7 @@
         var monstreDirection = 0;
         var monstreDirection2 = 0;
         var monstreDirection3 = 0;
+        var keyA;
         function create (){
 
             cursors = this.input.keyboard.createCursorKeys();
@@ -77,12 +78,18 @@
                     "zones",
                     "Phaser_tuilesdejeu"
                     );  
-
+                const tilesetP = carteDuNiveau.addTilesetImage(
+                    "zones2",
+                    "Phaser_tuilesdejeu"
+                    );
             const plateformes = carteDuNiveau.createStaticLayer(
                     "zonePlaine",
                     tileset
                     );
-        
+            const plateformesP = carteDuNiveau.createStaticLayer(
+                    "passe",
+                    tilesetP
+                    );
             player = this.physics.add.sprite(32,32,'perso'); 
             monstre = this.physics.add.sprite(32,32,'slime');
             monstre2 = this.physics.add.sprite(32,32,'slime');
@@ -147,6 +154,9 @@
             frameRate: 20
             });
 
+            this.input.keyboard.enabled = true
+            keyA = this.input.keyboard.addKey('a');
+
 
         }
         
@@ -170,6 +180,9 @@
             if (cursors.down.isDown){//si la touche bas est appuyée 
                     player.setVelocityY(160);//alors vitesse positive en Y
                     player.anims.play('down', true); 
+            }
+            if (Phaser.Input.Keyboard.JustDown(keyA)){
+                
             }
 
             if (monstreDirection == 0) {
