@@ -45,7 +45,7 @@
         function preload(){
 
             this.load.image("Phaser_tuilesdejeu", "assets/toutesleszones.png");
-
+            this.load.image("Phaser_tuilesdejeu2", "assets/toutesleszones2.png");
             this.load.tilemapTiledJSON("carte", "assets/niveau.json");  
             this.load.tilemapTiledJSON("carteP","assets/niveauP.json");
             this.load.spritesheet('perso','assets/testhero.png',
@@ -68,7 +68,9 @@
         var monstreDirection2 = 0;
         var monstreDirection3 = 0;
         var keyA;
-        function create (){
+        var vieJoueur = 8;
+
+        function create(){
 
             cursors = this.input.keyboard.createCursorKeys();
             const carteDuNiveau = this.add.tilemap("carte");
@@ -78,28 +80,33 @@
                     "zones",
                     "Phaser_tuilesdejeu"
                     );  
-                const tilesetP = carteDuNiveau.addTilesetImage(
+            const tilesetP = carteDuNiveau.addTilesetImage(
                     "zones2",
-                    "Phaser_tuilesdejeu"
+                    "Phaser_tuilesdejeu2"
                     );
-            const plateformes = carteDuNiveau.createStaticLayer(
+            this.plateformes = carteDuNiveau.createStaticLayer(
                     "zonePlaine",
                     tileset
                     );
-            const plateformesP = carteDuNiveau.createStaticLayer(
+            this.plateformesP = carteDuNiveau.createStaticLayer(
                     "passe",
                     tilesetP
                     );
+
             player = this.physics.add.sprite(32,32,'perso'); 
             monstre = this.physics.add.sprite(32,32,'slime');
             monstre2 = this.physics.add.sprite(32,32,'slime');
             monstre3 = this.physics.add.sprite(32,32,'slime');   
             vie = this.physics.add.sprite(50,10,'vieentier').setScale(0.75).refreshBody();
-            this.physics.add.collider(player, plateformes);
-            this.physics.add.collider(monstre, plateformes);
-            this.physics.add.collider(monstre2, plateformes);
+            this.physics.add.collider(player, this.plateformes);
+            this.physics.add.collider(monstre, this.plateformes);
+            this.physics.add.collider(monstre2, this.plateformes);
+            this.physics.add.collider(player, monstre, hitMonstre, null, this);
+            this.physics.add.collider(player, monstre2, hitMonstre2, null, this);
+            this.physics.add.collider(player, monstre3, hitMonstre3, null, this);
             vie.setScrollFactor(0)
-            plateformes.setCollisionByProperty({ estSolide: true });   
+
+            this.plateformes.setCollisionByProperty({ estSolide: true });   
             player.body.setSize(20, 20, 10, 0);
             monstre.body.setSize(20, 10);
                 monstre.setOffset(5,20);
@@ -111,8 +118,6 @@
             monstre.y = 50;
             monstre2.x = 270;
             monstre2.y = 110;
-            player.x = 400
-            player.y = 900
             monstre3.x = 400
             monstre3.y = 970
             this.physics.world.setBounds(0, 0, 960, 1280);
@@ -155,12 +160,62 @@
             });
 
             this.input.keyboard.enabled = true
-            keyA = this.input.keyboard.addKey('a');
-
+            keyA = this.input.keyboard.addKey('a');            
 
         }
-        
-        function update(){   
+        function hitMonstre(player, monstre){
+                    this.physics.pause();
+                    player.setTint(0xff0000);
+                    player.anims.play('turn');
+                    vieJoueur = vieJoueur - 1}
+
+        function hitMonstre2(player, monstre){
+                    this.physics.pause();
+                    player.setTint(0xff0000);
+                    player.anims.play('turn');
+                    vieJoueur = vieJoueur - 1}
+
+        function hitMonstre3(player, monstre){
+                    this.physics.pause();
+                    player.setTint(0xff0000);
+                    player.anims.play('turn');
+                    vieJoueur = vieJoueur - 1}
+                   
+        function update(){
+
+            if (vieJoueur == 8){
+                this.physics.add.sprite(50,10,'vieentier').setScale(0.75).refreshBody();
+                vie.setScrollFactor(0)
+            }
+            if (vieJoueur == 7){
+                this.physics.add.sprite(50,10,'vie2').setScale(0.75).refreshBody();
+                vie2.setScrollFactor(0)
+            }
+            if (vieJoueur == 6){
+                this.physics.add.sprite(50,10,'vie3').setScale(0.75).refreshBody();
+                vie3.setScrollFactor(0)
+            }
+            if (vieJoueur == 5){
+                this.physics.add.sprite(50,10,'vie4').setScale(0.75).refreshBody();
+                vie4.setScrollFactor(0)
+            }
+            if (vieJoueur == 4){
+                this.physics.add.sprite(50,10,'vie5').setScale(0.75).refreshBody();
+                vie5.setScrollFactor(0)
+            }
+            if (vieJoueur == 3){
+                this.physics.add.sprite(50,10,'vie6').setScale(0.75).refreshBody();
+                vie6.setScrollFactor(0)
+            }
+            if (vieJoueur == 2){
+                this.physics.add.sprite(50,10,'vie7').setScale(0.75).refreshBody();
+                vie7.setScrollFactor(0)
+            }
+            if (vieJoueur == 1){
+                this.physics.add.sprite(50,10,'viefin').setScale(0.75).refreshBody();
+                viefin.setScrollFactor(0)
+            }
+
             if (cursors.left.isDown){ //si la touche gauche est appuyée
                     player.setVelocityX(-160); //alors vitesse négative en X
                     player.anims.play('left', true); //et animation => gauche
@@ -182,8 +237,9 @@
                     player.anims.play('down', true); 
             }
             if (Phaser.Input.Keyboard.JustDown(keyA)){
-                
+
             }
+
 
             if (monstreDirection == 0) {
                 monstre.x = monstre.x +1
