@@ -88,7 +88,7 @@
             this.monstre3.y = 970
             this.physics.world.setBounds(0, 0, 960, 1280);
             this.cameras.main.setBounds(0, 0, 960,1280);
-            this.cameras.main.setSize(320,320);
+            this.cameras.main.setSize(768,432);
             this.cameras.main.startFollow(this.player);
             
         
@@ -256,67 +256,67 @@
 
 
             if (this.monstreDirection == 0) {
-                monstre.x = monstre.x +1
+                this.monstre.x = this.monstre.x +1
                 if(monstre.x >= 270) {
-                    monstreDirection = 1;
+                    this.monstreDirection = 1;
                 }
             }
             else if (this.monstreDirection == 1)
                 {
-                    monstre.y = monstre.y + 1;
+                    this.monstre.y = this.monstre.y + 1;
                     if(monstre.y >= 120) {
-                        monstreDirection = 2;
+                        this.monstreDirection = 2;
                     }
             }
             else if (this.monstreDirection == 2) {
-                monstre.x = monstre.x -1
+                this.monstre.x = this.monstre.x -1
                 if(monstre.x == 50) {
-                    monstreDirection = 3;
+                    this.monstreDirection = 3;
                 }
             }
             else if (this.monstreDirection == 3) {
-                monstre.y = monstre.y - 1;
+                this.monstre.y = this.monstre.y - 1;
                 if (monstre.y <= 50) {
-                    monstreDirection = 0;
+                    this.monstreDirection = 0;
                 }
             }
             
             if (this.monstreDirection2 == 0) {
-                monstre2.x = monstre2.x +1
+                this.monstre2.x = this.monstre2.x +1
                 if(monstre2.x >= 270) {
-                    monstreDirection2 = 1;
+                    this.monstreDirection2 = 1;
                 }
             }
             else if (this.monstreDirection2 == 1)
                 {
-                    monstre2.y = monstre2.y + 1;
+                    this.monstre2.y = this.monstre2.y + 1;
                     if(monstre2.y >= 120) {
-                        monstreDirection2 = 2;
+                        this.monstreDirection2 = 2;
                     }
             }
             else if (this.monstreDirection2 == 2) {
-                monstre2.x = monstre2.x -1
+                this.monstre2.x = this.monstre2.x -1
                 if(monstre2.x == 50) {
-                    monstreDirection2 = 3;
+                    this.monstreDirection2 = 3;
                 }
             }
             else if (this.monstreDirection2 == 3) {
-                monstre2.y = monstre2.y - 1;
+                this.monstre2.y = this.monstre2.y - 1;
                 if (monstre2.y <= 50) {
-                    monstreDirection2 = 0;
+                    this.monstreDirection2 = 0;
                 }
             }
             if (this.monstreDirection3 == 0) {
-                monstre3.x = monstre3.x +1
+                this.monstre3.x = this.monstre3.x +1
                 if(monstre3.x >= 500) {
-                    monstreDirection3 = 1;
+                    this.monstreDirection3 = 1;
                 }
             }
             else if (this.monstreDirection3 == 1)
                 {
-                    monstre3.y = monstre3.y + 1;
+                    this.monstre3.y = this.monstre3.y + 1;
                     if(monstre3.y >= 1160) {
-                        monstreDirection3 = 2;
+                        this.monstreDirection3 = 2;
                     }
             }
             else if (this.monstreDirection3 == 2) {
@@ -332,27 +332,27 @@
                 }
             }
             else if (this.monstreDirection3 == 4) {
-                monstre3.x = monstre3.x - 1;
+                this.monstre3.x = this.monstre3.x - 1;
                 if (monstre3.x <= 460) {
-                    monstreDirection3 = 5;
+                    this.monstreDirection3 = 5;
                 }
             }
             else if (this.monstreDirection3 == 5) {
-                monstre3.y = monstre3.y - 1;
+                this.monstre3.y = this.monstre3.y - 1;
                 if (monstre3.y <= 1080) {
-                    monstreDirection3 = 6;
+                    this.monstreDirection3 = 6;
                 }
             }
             else if (this.monstreDirection3 == 6) {
-                monstre3.x = monstre3.x - 1;
+                this.monstre3.x = this.monstre3.x - 1;
                 if (monstre3.x <= 400) {
-                    monstreDirection3 = 7;
+                    this.monstreDirection3 = 7;
                 }
             }
             else if (this.monstreDirection3 == 7) {
-                monstre3.y = monstre3.y - 1;
+                this.monstre3.y = this.monstre3.y - 1;
                 if (monstre3.y <= 970) {
-                    monstreDirection3 = 0;
+                    this.monstreDirection3 = 0;
                 }
             }
         }
