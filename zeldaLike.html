@@ -34,9 +34,7 @@
         preload(){
 
             this.load.image("Phaser_tuilesdejeu", "assets/toutesleszones.png");
-            this.load.image("Phaser_tuilesdejeu2", "assets/toutesleszones2.png");
             this.load.tilemapTiledJSON("carte", "assets/niveau.json");  
-            this.load.tilemapTiledJSON("carteP","assets/niveauP.json");
             this.load.spritesheet('perso','assets/testhero.png',
             { frameWidth: 32, frameHeight: 32 });
 
@@ -365,9 +363,7 @@
         }
         preload(){
 
-            this.load.image("Phaser_tuilesdejeu", "assets/toutesleszones.png");
-            this.load.image("Phaser_tuilesdejeu2", "assets/toutesleszones2.png");
-            this.load.tilemapTiledJSON("carte", "assets/niveau.json");  
+            this.load.image("Phaser_tuilesdejeu2", "assets/toutesleszones2.png"); 
             this.load.tilemapTiledJSON("carteP","assets/niveauP.json");
             this.load.spritesheet('perso','assets/testhero.png',
             { frameWidth: 32, frameHeight: 32 });
@@ -381,7 +377,7 @@
           create(){
 
             this.cursors = this.input.keyboard.createCursorKeys();
-            const carteDuNiveau = this.add.tilemap("carte");
+            const carteDuNiveau = this.add.tilemap("carteP");
 
             // importer les TileSet 
 
@@ -393,21 +389,21 @@
                     "passe",
                     tilesetP
                     );
-
+            console.log(tilesetP)
             this.player = this.physics.add.sprite(32,32,'perso'); 
             this.monstre = this.physics.add.sprite(32,32,'slime');
             this.monstre2 = this.physics.add.sprite(32,32,'slime');
             this.monstre3 = this.physics.add.sprite(32,32,'slime');   
             this.vie = this.add.sprite(50,10,'toutelesvies').setScale(0.75);
             this.vie.setScrollFactor(0);
-            this.physics.add.collider(this.player, this.plateformes);
-            this.physics.add.collider(this.monstre, this.plateformes);
-            this.physics.add.collider(this.monstre2, this.plateformes);
+            this.physics.add.collider(this.player, this.plateformesP);
+            this.physics.add.collider(this.monstre, this.plateformesP);
+            this.physics.add.collider(this.monstre2, this.plateformesP);
             this.physics.add.collider(this.player, this.monstre, this.hitMonstre, null, this);
             this.physics.add.collider(this.player, this.monstre2, this.hitMonstre2, null, this);
             this.physics.add.collider(this.player, this.monstre3, this.hitMonstre3, null, this);
 
-            this.plateformes.setCollisionByProperty({ estSolide: true });   
+            this.plateformesP.setCollisionByProperty({ estSolide: true });   
             this.player.body.setSize(20, 20, 10, 0);
             this.monstre.body.setSize(20, 10);
                 this.monstre.setOffset(5,20);
