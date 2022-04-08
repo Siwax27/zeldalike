@@ -31,6 +31,10 @@
         constructor(){
         super("scenepresent");
         }
+        init(data){
+            this.x = data.x;
+            this.y = data.y;
+        }
         preload(){
 
             this.load.image("Phaser_tuilesdejeu", "assets/toutesleszones.png");
@@ -45,6 +49,12 @@
         }
 
           create(){
+            if (typeof this.x == 'undefined') {
+                this.x = 2000
+            }
+            if (typeof this.y == 'undefined') {
+                this.y = 2000
+            }
 
             this.cursors = this.input.keyboard.createCursorKeys();
             const carteDuNiveau = this.add.tilemap("carte");
@@ -59,7 +69,7 @@
                     tileset
                     );
 
-            this.player = this.physics.add.sprite(32,32,'perso'); 
+            this.player = this.physics.add.sprite(32,32,'perso');
             this.monstre = this.physics.add.sprite(32,32,'slime');
             this.monstre2 = this.physics.add.sprite(32,32,'slime');
             this.monstre3 = this.physics.add.sprite(32,32,'slime');   
@@ -84,10 +94,12 @@
             this.monstre.y = 50;
             this.monstre2.x = 270;
             this.monstre2.y = 110;
-            this.monstre3.x = 400
-            this.monstre3.y = 970
-            this.physics.world.setBounds(0, 0, 960, 1280);
-            this.cameras.main.setBounds(0, 0, 960,1280);
+            this.monstre3.x = 400;
+            this.monstre3.y = 970;
+            this.player.x = this.x;
+            this.player.y = this.y;
+            this.physics.world.setBounds(0, 0, 3200, 3200);
+            this.cameras.main.setBounds(0, 0, 3200,3200);
             this.cameras.main.setSize(768,432);
             this.cameras.main.startFollow(this.player);
             
@@ -251,7 +263,7 @@
                     this.player.anims.play('down', true); 
             }
             if (Phaser.Input.Keyboard.JustDown(this.keyA)){
-                this.scene.start("scenepasser");
+                this.scene.start("scenepasser",{x : this.player.x , y : this.player.y, vie : this.vie});
             }
 
 
@@ -361,6 +373,10 @@
         constructor(){
         super("scenepasser");
         }
+        init(data){
+            this.x = data.x;
+            this.y = data.y;
+        }
         preload(){
 
             this.load.image("Phaser_tuilesdejeu2", "assets/toutesleszones2.png"); 
@@ -390,7 +406,7 @@
                     tilesetP
                     );
             console.log(tilesetP)
-            this.player = this.physics.add.sprite(32,32,'perso'); 
+            this.player = this.physics.add.sprite(32,32,'perso');
             this.monstre = this.physics.add.sprite(32,32,'slime');
             this.monstre2 = this.physics.add.sprite(32,32,'slime');
             this.monstre3 = this.physics.add.sprite(32,32,'slime');   
@@ -402,7 +418,6 @@
             this.physics.add.collider(this.player, this.monstre, this.hitMonstre, null, this);
             this.physics.add.collider(this.player, this.monstre2, this.hitMonstre2, null, this);
             this.physics.add.collider(this.player, this.monstre3, this.hitMonstre3, null, this);
-
             this.plateformesP.setCollisionByProperty({ estSolide: true });   
             this.player.body.setSize(20, 20, 10, 0);
             this.monstre.body.setSize(20, 10);
@@ -417,8 +432,10 @@
             this.monstre2.y = 110;
             this.monstre3.x = 400
             this.monstre3.y = 970
-            this.physics.world.setBounds(0, 0, 960, 1280);
-            this.cameras.main.setBounds(0, 0, 960,1280);
+            this.player.x = this.x
+            this.player.y = this.y
+            this.physics.world.setBounds(0, 0, 3200, 3200);
+            this.cameras.main.setBounds(0, 0, 3200,3200);
             this.cameras.main.setSize(768,432);
             this.cameras.main.startFollow(this.player);
             
@@ -582,7 +599,7 @@
                     this.player.anims.play('down', true); 
             }
             if (Phaser.Input.Keyboard.JustDown(this.keyA)){
-                this.scene.start("scenepresent");
+                this.scene.start("scenepresent",{x : this.player.x , y : this.player.y, vie : this.vie});
             }
 
 
