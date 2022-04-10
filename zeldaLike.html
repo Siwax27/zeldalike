@@ -34,6 +34,7 @@
         init(data){
             this.x = data.x;
             this.y = data.y;
+            this.vieJoueur = data.vie;
         }
         preload(){
 
@@ -50,11 +51,12 @@
 
           create(){
             if (typeof this.x == 'undefined') {
-                this.x = 2000
+                this.x = 2550
             }
             if (typeof this.y == 'undefined') {
-                this.y = 2000
+                this.y = 800
             }
+            
 
             this.cursors = this.input.keyboard.createCursorKeys();
             const carteDuNiveau = this.add.tilemap("carte");
@@ -78,9 +80,9 @@
             this.physics.add.collider(this.player, this.plateformes);
             this.physics.add.collider(this.monstre, this.plateformes);
             this.physics.add.collider(this.monstre2, this.plateformes);
-            this.physics.add.collider(this.player, this.monstre, this.hitMonstre, null, this);
-            this.physics.add.collider(this.player, this.monstre2, this.hitMonstre2, null, this);
-            this.physics.add.collider(this.player, this.monstre3, this.hitMonstre3, null, this);
+            this.physics.add.overlap(this.player, this.monstre, this.hitMonstre, null, this);
+            this.physics.add.overlap(this.player, this.monstre2, this.hitMonstre2, null, this);
+            this.physics.add.overlap(this.player, this.monstre3, this.hitMonstre3, null, this);
 
             this.plateformes.setCollisionByProperty({ estSolide: true });   
             this.player.body.setSize(20, 20, 10, 0);
@@ -90,10 +92,13 @@
                 this.monstre2.setOffset(5,20);
             this.monstre3.body.setSize(20, 10);
                 this.monstre3.setOffset(5,20);
-            this.monstre.x = 70;
-            this.monstre.y = 50;
-            this.monstre2.x = 270;
-            this.monstre2.y = 110;
+            this.monstreDirection = 0;
+            this.monstreDirection2 = 0;
+            this.vieJoueur = 9;
+            this.monstre.x = 2400;
+            this.monstre.y = 800;
+            this.monstre2.x = 1900;
+            this.monstre2.y = 790;
             this.monstre3.x = 400;
             this.monstre3.y = 970;
             this.player.x = this.x;
@@ -188,7 +193,7 @@
             key: 'vie0',
             frames: this.anims.generateFrameNumbers('toutelesvies', {start:8}),
             frameRate: 0,
-            repeat: 0
+            repeat: 0 
             });
 
             this.input.keyboard.enabled = true
@@ -240,6 +245,7 @@
             }
             if (this.vieJoueur == 1){
                 this.vie.anims.play("vie0",true);
+                return this.scene.start("scenepresent",{x :  2550, y : 800, vie : this.vie});
             }
 
             if (this.cursors.left.isDown){ //si la touche gauche est appuyée
@@ -269,52 +275,52 @@
 
             if (this.monstreDirection == 0) {
                 this.monstre.x = this.monstre.x +1
-                if(this.monstre.x >= 270) {
+                if(this.monstre.x == 2480) {
                     this.monstreDirection = 1;
                 }
             }
             else if (this.monstreDirection == 1)
                 {
-                    this.monstre.y = this.monstre.y + 1;
-                    if(this.monstre.y >= 120) {
+                    this.monstre.y = this.monstre.y - 1;
+                    if(this.monstre.y == 700) {
                         this.monstreDirection = 2;
                     }
             }
             else if (this.monstreDirection == 2) {
-                this.monstre.x = this.monstre.x -1
-                if(this.monstre.x == 50) {
+                this.monstre.x = this.monstre.x - 1
+                if(this.monstre.x == 2400) {
                     this.monstreDirection = 3;
                 }
             }
             else if (this.monstreDirection == 3) {
-                this.monstre.y = this.monstre.y - 1;
-                if (this.monstre.y <= 50) {
+                this.monstre.y = this.monstre.y + 1;
+                if (this.monstre.y == 800) {
                     this.monstreDirection = 0;
                 }
             }
             
             if (this.monstreDirection2 == 0) {
                 this.monstre2.x = this.monstre2.x +1
-                if(this.monstre2.x >= 270) {
+                if(this.monstre2.x == 2000) {
                     this.monstreDirection2 = 1;
                 }
             }
             else if (this.monstreDirection2 == 1)
                 {
-                    this.monstre2.y = this.monstre2.y + 1;
-                    if(this.monstre2.y >= 120) {
+                    this.monstre2.y = this.monstre2.y - 1;
+                    if(this.monstre2.y == 700) {
                         this.monstreDirection2 = 2;
                     }
             }
             else if (this.monstreDirection2 == 2) {
-                this.monstre2.x = this.monstre2.x -1
-                if(this.monstre2.x == 50) {
+                this.monstre2.x = this.monstre2.x - 1
+                if(this.monstre2.x == 1900) {
                     this.monstreDirection2 = 3;
                 }
             }
             else if (this.monstreDirection2 == 3) {
-                this.monstre2.y = this.monstre2.y - 1;
-                if (this.monstre2.y <= 50) {
+                this.monstre2.y = this.monstre2.y + 1;
+                if (this.monstre2.y == 790) {
                     this.monstreDirection2 = 0;
                 }
             }
@@ -415,9 +421,9 @@
             this.physics.add.collider(this.player, this.plateformesP);
             this.physics.add.collider(this.monstre, this.plateformesP);
             this.physics.add.collider(this.monstre2, this.plateformesP);
-            this.physics.add.collider(this.player, this.monstre, this.hitMonstre, null, this);
-            this.physics.add.collider(this.player, this.monstre2, this.hitMonstre2, null, this);
-            this.physics.add.collider(this.player, this.monstre3, this.hitMonstre3, null, this);
+            this.physics.add.overlap(this.player, this.monstre, this.hitMonstre, null, this);
+            this.physics.add.overlap(this.player, this.monstre2, this.hitMonstre2, null, this);
+            this.physics.add.overlap(this.player, this.monstre3, this.hitMonstre3, null, this);
             this.plateformesP.setCollisionByProperty({ estSolide: true });   
             this.player.body.setSize(20, 20, 10, 0);
             this.monstre.body.setSize(20, 10);
@@ -426,10 +432,13 @@
                 this.monstre2.setOffset(5,20);
             this.monstre3.body.setSize(20, 10);
                 this.monstre3.setOffset(5,20);
-            this.monstre.x = 70;
-            this.monstre.y = 50;
-            this.monstre2.x = 270;
-            this.monstre2.y = 110;
+            this.vieJoueur = 9;
+            this.monstreDirection = 0;
+            this.monstreDirection2 = 0;
+            this.monstre.x = 2400;
+            this.monstre.y = 800;
+            this.monstre2.x = 1900;
+            this.monstre2.y = 790;
             this.monstre3.x = 400
             this.monstre3.y = 970
             this.player.x = this.x
@@ -604,54 +613,54 @@
 
 
             if (this.monstreDirection == 0) {
-                this.monstre.x = monstre.x +1
-                if(monstre.x >= 270) {
-                    monstreDirection = 1;
+                this.monstre.x = this.monstre.x +1
+                if(this.monstre.x == 2480) {
+                    this.monstreDirection = 1;
                 }
             }
             else if (this.monstreDirection == 1)
                 {
-                    monstre.y = monstre.y + 1;
-                    if(monstre.y >= 120) {
-                        monstreDirection = 2;
+                    this.monstre.y = this.monstre.y - 1;
+                    if(this.monstre.y == 700) {
+                        this.monstreDirection = 2;
                     }
             }
             else if (this.monstreDirection == 2) {
-                monstre.x = monstre.x -1
-                if(monstre.x == 50) {
-                    monstreDirection = 3;
+                this.monstre.x = this.monstre.x - 1
+                if(this.monstre.x == 2400) {
+                    this.monstreDirection = 3;
                 }
             }
             else if (this.monstreDirection == 3) {
-                monstre.y = monstre.y - 1;
-                if (monstre.y <= 50) {
-                    monstreDirection = 0;
+                this.monstre.y = this.monstre.y + 1;
+                if (this.monstre.y == 800) {
+                    this.monstreDirection = 0;
                 }
             }
             
             if (this.monstreDirection2 == 0) {
-                monstre2.x = monstre2.x +1
-                if(monstre2.x >= 270) {
-                    monstreDirection2 = 1;
+                this.monstre2.x = this.monstre2.x +1
+                if(this.monstre2.x == 2000) {
+                    this.monstreDirection2 = 1;
                 }
             }
             else if (this.monstreDirection2 == 1)
                 {
-                    monstre2.y = monstre2.y + 1;
-                    if(monstre2.y >= 120) {
-                        monstreDirection2 = 2;
+                    this.monstre2.y = this.monstre2.y - 1;
+                    if(this.monstre2.y == 700) {
+                        this.monstreDirection2 = 2;
                     }
             }
             else if (this.monstreDirection2 == 2) {
-                monstre2.x = monstre2.x -1
-                if(monstre2.x == 50) {
-                    monstreDirection2 = 3;
+                this.monstre2.x = this.monstre2.x - 1
+                if(this.monstre2.x == 1900) {
+                    this.monstreDirection2 = 3;
                 }
             }
-            else if (this.monstreDirection2 == 3) {
-                monstre2.y = monstre2.y - 1;
-                if (monstre2.y <= 50) {
-                    monstreDirection2 = 0;
+            else if (this.monstreDirection2 == 3){
+                this.monstre2.y = this.monstre2.y + 1;
+                if (this.monstre2.y == 790) {
+                    this.monstreDirection2 = 0;
                 }
             }
             if (this.monstreDirection3 == 0) {
